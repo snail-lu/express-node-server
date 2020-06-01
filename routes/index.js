@@ -25,23 +25,27 @@ router.get('/', function(req, res, next) {
 * */
 router.post('/register',function(req,res){
   //1.获取请求参数
-  const {username,password,type} = req.body;
+  const { username,password,email,adminLevel,avatar } = req.body;
+  if(!email || adminLevel===undefined){
+    res.send({ code: 1, msg: '用户信息不完整'})
+    return;
+  }
   //2.处理
     //判断用户是否已经存在
     UserModel.findOne({username},function(error,user){
       if(user){
         //3.返回响应数据
-        res.send({code:1,msg:'此用户已存在'});
+        res.send({code:1,msg:'此用户名已存在'});
       }else{
         //3.返回响应数据
-        const userModel = new UserModel({username,password:md5(password),type});
+        const userModel = new UserModel({username,password:md5(password),email,adminLevel,avatar});
         userModel.save(function(error,user){
           //生成一个cookie,并交给浏览器保存
           res.cookie('userid',user._id,{maxAge:1000*60*60*24*7});
 
           //返回响应数据
-          const data = {_id:user._id,username,type};
-          res.send({code:0,data:data})
+          const data = {_id:user._id,username,adminLevel};
+          res.send({code:0,data:data,msg: '注册成功'})
         })
       }
     })
