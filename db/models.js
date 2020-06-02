@@ -6,7 +6,7 @@
 const mongoose = require('mongoose');
 
 //1.2 连接指定的数据库
-mongoose.connect('mongodb://localhost:27017/adminclient');
+mongoose.connect('mongodb://localhost:27017/adminclient',{useNewUrlParser: true, useFindAndModify: false,useUnifiedTopology: true});
 //1.3 获取连接对象
 const conn = mongoose.connection;
 //1.4 绑定连接完成的监听
@@ -16,6 +16,17 @@ conn.on('connected',()=>{
 
 //2 得到对应特定集合的Model并向外暴露
 //2.1 字义Schema(描述文档结构)
+
+//admins集合文档结构
+const adminSchema = mongoose.Schema({
+    username: { type:String, required:true },       //用户名
+    password: { type:String, required:true },       //密码
+    email: { type:String, required:true },          //邮箱
+    adminLevel: { type:String, required:true } ,    //职位权限
+    avatar:{ type:String },                         //头像
+})
+
+//users集合文档结构
 const userSchema = mongoose.Schema({
     username: { type:String, required:true },       //用户名
     password: { type:String, required:true },       //密码
@@ -42,10 +53,12 @@ const categorySchema = mongoose.Schema({
 
 //2.2 定义Model
 const UserModel = mongoose.model('user',userSchema);
+const AdminModel = mongoose.model('admin',adminSchema);
 const ChatModel = mongoose.model('chat',chatSchema);
 const CateModel = mongoose.model('cate',categorySchema);
 
 //2.3 向外暴露Model
 exports.UserModel = UserModel;
+exports.AdminModel = AdminModel;
 exports.ChatModel = ChatModel;
 exports.CateModel = CateModel;
