@@ -38,7 +38,7 @@ router.post('/register',function(req,res){
           res.cookie('userid',user._id,{maxAge:1000*60*60*24*7});
 
           //返回响应数据
-          const data = {_id:user._id,username,adminLevel};
+          const data = {_id:user._id,username,adminLevel,avatar,email};
           res.send({code:0,data:data,msg: '注册成功'})
         })
       }
