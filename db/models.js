@@ -51,14 +51,40 @@ const categorySchema = mongoose.Schema({
     name: {type:Object,required:true},            //分类名称
 })
 
+//configs集合文档结构
+const configSchema = mongoose.Schema({
+    configName: { type:String, required:true },      //配置名称
+    configKey: { type:String, required:true },       //配置键值
+    configValue: { type:Object, required:true },     //配置值
+    configSorts: { type:Number, required:true } ,    //排序
+    addTime: { type: String },                       //添加时间
+    modifyTime: { type: String },                    //修改时间
+    reviser: { type: String },                       //修改人
+    configStatus: { type: Boolean}                    //状态
+})
+
+//articles集合文档结构
+const articleSchema = mongoose.Schema({
+    title: { type:String, required:true },             //标题
+    author: { type: String, required: true },          //作者
+    content: { type:String, required:true },           //内容
+    publishTime: { type: String },                     //发布时间
+    updateTime: { type: String },                      //修改时间
+    status: { type: Boolean}                           //状态
+})
+
 //2.2 定义Model
 const UserModel = mongoose.model('user',userSchema);
 const AdminModel = mongoose.model('admin',adminSchema);
 const ChatModel = mongoose.model('chat',chatSchema);
 const CateModel = mongoose.model('cate',categorySchema);
+const ConfigModel = mongoose.model('config', configSchema);
+const ArticleModel = mongoose.model('article', articleSchema);
 
 //2.3 向外暴露Model
 exports.UserModel = UserModel;
 exports.AdminModel = AdminModel;
 exports.ChatModel = ChatModel;
 exports.CateModel = CateModel;
+exports.ConfigModel = ConfigModel;
+exports.ArticleModel = ArticleModel;
