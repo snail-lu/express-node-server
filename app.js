@@ -25,6 +25,18 @@ app.use(express.urlencoded({ limit: '500kb', extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.all('*', function(req, res, next) {
+ 
+  res.header("Access-Control-Allow-Origin", "*");//项目上线后改成页面的地址
+   
+  res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
+   
+  res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+   
+  next();
+});
+
 app.use('/api', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/admin', adminRouter);
