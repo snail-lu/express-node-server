@@ -11,7 +11,7 @@ mongoose.connect('mongodb://localhost:27017/adminclient',{useNewUrlParser: true,
 const conn = mongoose.connection;
 //1.4 绑定连接完成的监听
 conn.on('connected',()=>{
-    console.log('数据库连接成功！');
+    console.log('adminclient数据库连接成功！');
 });
 
 //2 得到对应特定集合的Model并向外暴露

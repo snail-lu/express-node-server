@@ -17,9 +17,10 @@ const filter = {password: 0,__v:0};
 * success：{code:0,data{_id:'abc',username:'xxx',password:'123'}}
 * fail：{code:1,msg:'此用户已存在'}
 * */
-router.post('/register',function(req,res){
-    //1.获取请求参数
-    const { username,password,email,adminLevel,avatar } = req.body;
+router.post('/register', function (req, res) {
+  //1.获取请求参数
+  const { username, password, email, adminLevel, avatar } = req.body;
+  
     if(!email || adminLevel===undefined){
       res.send({ code: 1, msg: '用户信息不完整'})
       return;
@@ -55,7 +56,8 @@ router.post('/register',function(req,res){
 * */
 router.post('/login',function(req,res){
   //1.获取请求参数
-  const {username,password} = req.body;
+  const { username, password } = req.body;
+
   //2.处理
   //判断用户名密码是否正确
   //返回的user数据，过滤掉filter中包含的属性
