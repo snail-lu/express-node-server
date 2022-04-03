@@ -11,8 +11,38 @@ var adminRouter = require('./routes/admins');
 var configRouter = require('./routes/configs');
 var articleRouter = require('./routes/articles')
 
-
 var app = express();
+
+// swagger generate
+var expressSwagger = require('express-swagger-generator')(app)
+let options = {
+  swaggerDefinition: {
+    info: {
+      description: 'This is a sample server',
+      title: 'Swagger',
+      version: '1.0.0'
+    },
+    host: 'localhost:4000',
+    basePath: '/',
+    produces: ['application/json', 'application/xml'],
+    schemes: ['http', 'https'],
+    securityDefinitions: {
+      JWT: {
+        type: 'apiKey',
+        in: 'header',
+        name: 'Authorization',
+        description: ''
+      }
+    }
+  },
+  route: {
+    url: '/swagger',
+    docs: '/swagger.json' //swagger文件 api
+  },
+  basedir: __dirname, //app absolute path
+  files: ['./routes/*.js'] //Path to the API handle folder
+}
+expressSwagger(options)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

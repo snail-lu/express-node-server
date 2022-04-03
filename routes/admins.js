@@ -8,15 +8,19 @@ const md5 = require('blueimp-md5');
 //过滤属性
 const filter = {password: 0,__v:0};
 
-//路由：管理员注册
-/*
-* path: /register
-* method：POST
-* params: username,password,type
-* admin是已注册用户
-* success：{code:0,data{_id:'abc',username:'xxx',password:'123'}}
-* fail：{code:1,msg:'此用户已存在'}
-* */
+//路由：
+/**
+ * 管理员注册
+ * @route POST /api/admin/register
+ * @group admin - Operation about admin
+ * @param {string} username.query.required - 请输入用户名
+ * @param {string} password.query.required - 请输入密码
+ * @param {string} email.query.required - 请输入邮箱
+ * @param {string} adminLevel.query.required - 请输入管理员等级
+ * @returns {object} 200 - An array of user info
+ * @returns {Error}  default - Unexpected error
+ * 
+ */
 router.post('/register', function (req, res) {
   //1.获取请求参数
   const { username, password, email, adminLevel, avatar } = req.body;
