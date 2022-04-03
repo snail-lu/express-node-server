@@ -1,5 +1,5 @@
 {
-  "name": "admin-client-server",
+  "name": "node-server",
   "version": "0.0.0",
   "private": true,
   "scripts": {
