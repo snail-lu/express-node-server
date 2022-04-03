@@ -5,13 +5,14 @@
 //1.1 引入mongoose
 const mongoose = require('mongoose');
 
-//1.2 连接指定的数据库
-mongoose.connect('mongodb://localhost:27017/adminclient',{useNewUrlParser: true, useFindAndModify: false,useUnifiedTopology: true});
+//1.2 连接数据库
+mongoose.connect('mongodb://localhost:27017/myapp',{useNewUrlParser: true, useFindAndModify: false,useUnifiedTopology: true});
 //1.3 获取连接对象
 const conn = mongoose.connection;
 //1.4 绑定连接完成的监听
-conn.on('connected',()=>{
-    console.log('adminclient数据库连接成功！');
+conn.on('error', console.error.bind(console, 'connection error:'));
+conn.once('open',()=>{
+    console.log('数据库连接成功！');
 });
 
 //2 得到对应特定集合的Model并向外暴露
