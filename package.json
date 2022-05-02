@@ -1,5 +1,5 @@
 {
-  "name": "node-server",
+  "name": "express-node-server",
   "version": "0.0.0",
   "private": true,
   "scripts": {

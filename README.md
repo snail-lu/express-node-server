@@ -1,9 +1,9 @@
-# Node Server
+# Express Node Server
 基于`Express`+`MongoDB`开发的`node.js`服务端项目。
 
 ## 目录结构
 ```
-node-server
+express-node-server
 ├── README.md               # 项目文档
 │
 ├── package.json            # 项目依赖
