@@ -9,7 +9,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admins');
 var configRouter = require('./routes/configs');
-var articleRouter = require('./routes/articles')
+var articleRouter = require('./routes/articles');
+var todoRouter = require('./routes/todos');
 
 var app = express();
 
@@ -18,12 +19,12 @@ var expressSwagger = require('express-swagger-generator')(app)
 let options = {
   swaggerDefinition: {
     info: {
-      description: 'This is a sample server',
+      description: 'This is a node server that developed by express',
       title: 'Swagger',
       version: '1.0.0'
     },
     host: 'localhost:4000',
-    basePath: '/',
+    basePath: '/api',
     produces: ['application/json', 'application/xml'],
     schemes: ['http', 'https'],
     securityDefinitions: {
