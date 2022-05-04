@@ -18,11 +18,10 @@ const filter = { password: 0, __v: 0 };
 
 /**
  * @typedef Response
- * @property {integer} code
+ * @property {number} code
  * @property {string} message
  * @property {object} result
  * @property {boolean} success
- * @property {integer} timestamp
  */
 /**
  * 管理员注册
@@ -73,9 +72,9 @@ router.post('/register', function (req, res) {
  * 管理员登录
  * @route POST /admin/login
  * @summary 管理员登录
- * @group admin - Operation about admin
+ * @group admin - 管理员模块
  * @param {AdminLogin.model} request.body.required - 登录参数
- * @returns {Response.moel} 200 - OK
+ * @returns {Response.model} 200 - OK
  * @returns {Error}  404 - Not Found
  */
 router.post('/login', function (req, res) {
@@ -110,9 +109,9 @@ router.post('/login', function (req, res) {
  * 管理员信息修改
  * @route POST /admin/update
  * @summary 管理员信息修改
- * @group admin - Operation about admin
+ * @group admin - 管理员模块
  * @param {AdminUpdate.model} params.body.required - 信息修改参数
- * @returns {Response.moel} 200 - OK
+ * @returns {Response.model} 200 - OK
  * @returns {Error}  404 - Not Found
  */
 router.post('/update', function (req, res) {
@@ -127,11 +126,16 @@ router.post('/update', function (req, res) {
 })
 
 /**
+ * @typedef AdminDelete
+ * @property {string} id - 主键
+ */
+/**
  * 管理员删除
- * @route POST /api/admin/delete
- * @group admin - Operation about admin
- * @param {string} id.query.required - 请输入管理员id
- * @returns {object} 200 - {code:0,data{_id:'abc',username:'xxx',password:'123'}}
+ * @route POST /admin/delete
+ * @summary 管理员删除
+ * @group admin - 管理员模块
+ * @param {AdminDelete.model} id.query.required - 请输入管理员id
+ * @returns {Response.model} 200 - OK
  * @returns {Error}  default - Unexpected error
  * 
  */
@@ -147,12 +151,26 @@ router.post('/delete', function (req, res) {
 })
 
 /**
+ * @typedef AdminList
+ * @property {string} usernameLike - 管理员名称（模糊查询）
+ * @property {number} adminLevel - 管理员等级
+ * @property {PageInfo.model} pageInfo.required - 分页参数
+ */
+
+/**
+ * @typedef PageInfo
+ * @property {number} pageNo - 页码
+ * @property {number} pageSize - 每页数量
+ */
+
+/**
  * 管理员列表
- * @route POST /api/admin/list
- * @group admin - Operation about admin
- * @param {string} id.query.required - 请输入管理员id
- * @returns {object} 200 - {code:0,data{_id:'abc',username:'xxx',password:'123'}}
- * @returns {Error}  default - Unexpected error
+ * @route POST /admin/list
+ * @summary 管理员列表
+ * @group admin - 管理员模块
+ * @param {AdminList.model} request.body.required - 查询参数
+ * @returns {Response.model} 200 - OK
+ * @returns {Error}  default - Not Found
  * 
  */
 router.post('/list', function (req, res) {

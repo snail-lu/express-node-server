@@ -10,7 +10,6 @@ var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admins');
 var configRouter = require('./routes/configs');
 var articleRouter = require('./routes/articles');
-var todoRouter = require('./routes/todos');
 
 var app = express();
 
