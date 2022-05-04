@@ -38,7 +38,7 @@ router.post('/register', function (req, res) {
   const { username, password, email, adminLevel, avatar } = req.body;
 
   if (!email || adminLevel === undefined) {
-    res.send({ code: 500, msg: '用户信息不完整' })
+    res.send({ code: 500, message: '用户信息不完整', success: false, result: null })
     return;
   }
   //2.处理
@@ -46,7 +46,7 @@ router.post('/register', function (req, res) {
   AdminModel.findOne({ username }, function (error, user) {
     if (user) {
       //3.返回响应数据
-      res.send({ code: 500, msg: '此用户名已存在' });
+      res.send({ code: 500, message: '此用户名已存在', success: false, result: null });
     } else {
       //3.返回响应数据
       const adminModel = new AdminModel({ username, password: md5(password), email, adminLevel, avatar });
@@ -56,7 +56,7 @@ router.post('/register', function (req, res) {
 
         //返回响应数据
         const data = { _id: user._id, username, adminLevel, avatar, email };
-        res.send({ code: 200, data: data, msg: '注册成功' })
+        res.send({ code: 200, result: data, message: '注册成功', success: true })
       })
     }
   })
@@ -89,10 +89,10 @@ router.post('/login', function (req, res) {
     if (user) {
       //3.返回响应数据"登录成功"
       res.cookie('userid', user._id, { maxAge: 100 * 60 * 60 * 24 * 7 });
-      res.send({ code: 200, data: user });
+      res.send({ code: 200, result: user, success: true, message: '登录成功'});
     } else {
       //3.
-      res.send({ code: 500, msg: "用户名或密码不正确！" })
+      res.send({ code: 500, message: "用户名或密码不正确！", success: false, result: null })
     }
   })
 
@@ -118,9 +118,9 @@ router.post('/update', function (req, res) {
   const { id: _id, username, email, adminLevel } = req.body;
   AdminModel.findByIdAndUpdate(_id, { username, email, adminLevel }, function (err, admin) {
     if (!err) {
-      res.send({ code: 200, msg: '修改成功' });
+      res.send({ code: 200, message: '修改成功', success: true, result: admin });
     } else {
-      res.send({ code: 500, msg: '修改失败' })
+      res.send({ code: 500, message: '修改失败', success: false, result: admin })
     }
   })
 })
@@ -143,9 +143,9 @@ router.post('/delete', function (req, res) {
   const { id } = req.body;
   AdminModel.findByIdAndDelete(id, function (err) {
     if (!err) {
-      res.send({ code: 200, msg: '删除成功' });
+      res.send({ code: 200, message: '删除成功', success: true, result: null });
     } else {
-      res.send({ code: 500, msg: '删除失败' })
+      res.send({ code: 500, message: '删除失败', success: false, result: null })
     }
   })
 })
@@ -176,9 +176,9 @@ router.post('/delete', function (req, res) {
 router.post('/list', function (req, res) {
   AdminModel.find({}, filter, function (err, admins) {
     if (err) {
-      res.send({ code: 500, msg: '查询失败' })
+      res.send({ code: 500, message: '查询失败', success: false, result: null })
     } else {
-      res.send({ code: 200, data: admins })
+      res.send({ code: 200, result: admins, success: true, message: '查询成功' })
     }
   })
 })
