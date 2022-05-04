@@ -6,10 +6,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var adminRouter = require('./routes/admins');
-var configRouter = require('./routes/configs');
-var articleRouter = require('./routes/articles');
+var userRouter = require('./routes/user');
+var adminRouter = require('./routes/admin');
+var configRouter = require('./routes/config');
+var articleRouter = require('./routes/article');
 
 var app = express();
 
@@ -67,11 +67,11 @@ app.all('*', function(req, res, next) {
   next();
 });
 
-app.use('/api', indexRouter);
-app.use('/api/users', usersRouter);
+app.use('/', indexRouter);
+app.use('/api/user', userRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/config', configRouter);
-app.use('/api/articles', articleRouter)
+app.use('/api/article', articleRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
