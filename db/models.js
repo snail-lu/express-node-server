@@ -12,7 +12,7 @@ const conn = mongoose.connection;
 //1.4 绑定连接完成的监听
 conn.on('error', console.error.bind(console, 'connection error:'));
 conn.once('open', () => {
-    console.log("\033[37;42m 数据库连接成功！ \033[0m");
+    console.log('\033[42;30m SUCCESS \033[40;32m 数据库连接成功！\033[0m');
 });
 
 //2 得到对应特定集合的Model并向外暴露
