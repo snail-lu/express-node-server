@@ -173,12 +173,14 @@ router.post('/delete', function (req, res) {
  * @returns {Error}  default - Not Found
  * 
  */
-router.post('/list', function (req, res) {
-  AdminModel.find({}, filter, function (err, admins) {
+router.post('/list', async function (req, res) {
+  const { pageInfo: { pageNo = 1, pageSize = 10 } } = req.body;
+  const total = await AdminModel.countDocuments({});
+  AdminModel.find({}, filter, { limit: pageSize, skip: (pageNo-1)*pageSize }, function (err, list) {
     if (err) {
       res.send({ code: 500, message: '查询失败', success: false, result: null })
     } else {
-      res.send({ code: 200, result: admins, success: true, message: '查询成功' })
+      res.send({ code: 200, result: { list, total }, success: true, message: '查询成功' })
     }
   })
 })
