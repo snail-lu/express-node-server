@@ -9,7 +9,6 @@ console.log(process.env.NODE_ENV, 'env')
 
 //1.2 连接数据库
 const dbURI = process.env.MONGODB_URI ? process.env.MONGODB_URI : 'mongodb://localhost:27017/myapp';
-console.log(dbURI, 'dbURI')
 mongoose.connect(dbURI, {useNewUrlParser: true, useFindAndModify: false,useUnifiedTopology: true});
 //1.3 获取连接对象
 const conn = mongoose.connection;
