@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "build": "node ./bin/www"
+    "build": "node ./bin/www",
+    "dev": "vercel dev"
   },
   "dependencies": {
+    "@vercel/node": "^2.5.2",
     "blueimp-md5": "^2.10.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
