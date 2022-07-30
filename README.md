@@ -29,9 +29,9 @@ express-node-server
 
 ```
 
-### swagger地址
+### 接口文档地址
 
-<my_server>/swagger
+https://node-server-nu.vercel.app/swagger
 
 ### 常用命令
 1. 启动数据库
