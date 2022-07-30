@@ -5,9 +5,12 @@
 //1.1 引入mongoose
 const mongoose = require('mongoose');
 
+console.log(process.env.NODE_ENV, 'env')
+
 //1.2 连接数据库
-// mongoose.connect('mongodb://localhost:27017/myapp',{useNewUrlParser: true, useFindAndModify: false,useUnifiedTopology: true}); // 本地库
-mongoose.connect("mongodb+srv://snaillu:3nTxfgZvHerdz0uS@cluster0.yrztx.mongodb.net/db_vue_ts_admin?retryWrites=true&w=majority",{useNewUrlParser: true, useFindAndModify: false,useUnifiedTopology: true});
+const dbURI = process.env.MONGODB_URI ? process.env.MONGODB_URI : 'mongodb://localhost:27017/myapp';
+console.log(dbURI, 'dbURI')
+mongoose.connect(dbURI, {useNewUrlParser: true, useFindAndModify: false,useUnifiedTopology: true});
 //1.3 获取连接对象
 const conn = mongoose.connection;
 //1.4 绑定连接完成的监听
