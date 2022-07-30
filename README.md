@@ -29,9 +29,9 @@ express-node-server
 
 ```
 
-### 前端项目
-- [admin-client](https://github.com/Snail-Lu/admin-client)
-- [employment-app](https://github.com/Snail-Lu/employment-app)
+### swagger地址
+
+<my_server>/swagger
 
 ### 常用命令
 1. 启动数据库
