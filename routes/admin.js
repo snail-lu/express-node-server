@@ -23,44 +23,44 @@ const filter = { password: 0, __v: 0 };
  * @property {object} result
  * @property {boolean} success
  */
-/**
- * 管理员注册
- * @route POST /admin/register
- * @summary 管理员注册
- * @group admin - 管理员模块
- * @param {AdminRegister.model} request.body.required - 管理员注册参数
- * @returns {Response.model} 200 - OK
- * @returns {Error} 404 - Not Found
- * 
- */
-router.post('/register', function (req, res) {
-  //1.获取请求参数
-  const { username, password, email, adminLevel, avatar } = req.body;
+// /**
+//  * 管理员注册
+//  * @route POST /admin/register
+//  * @summary 管理员注册
+//  * @group admin - 管理员模块
+//  * @param {AdminRegister.model} request.body.required - 管理员注册参数
+//  * @returns {Response.model} 200 - OK
+//  * @returns {Error} 404 - Not Found
+//  * 
+//  */
+// router.post('/register', function (req, res) {
+//   //1.获取请求参数
+//   const { username, password, email, adminLevel, avatar } = req.body;
 
-  if (!email || adminLevel === undefined) {
-    res.send({ code: 500, message: '用户信息不完整', success: false, result: null })
-    return;
-  }
-  //2.处理
-  //判断用户是否已经存在
-  AdminModel.findOne({ username }, function (error, user) {
-    if (user) {
-      //3.返回响应数据
-      res.send({ code: 500, message: '此用户名已存在', success: false, result: null });
-    } else {
-      //3.返回响应数据
-      const adminModel = new AdminModel({ username, password: md5(password), email, adminLevel, avatar });
-      adminModel.save(function (error, user) {
-        //生成一个cookie,并交给浏览器保存
-        res.cookie('userid', user._id, { maxAge: 1000 * 60 * 60 * 24 * 7 });
+//   if (!email || adminLevel === undefined) {
+//     res.send({ code: 500, message: '用户信息不完整', success: false, result: null })
+//     return;
+//   }
+//   //2.处理
+//   //判断用户是否已经存在
+//   AdminModel.findOne({ username }, function (error, user) {
+//     if (user) {
+//       //3.返回响应数据
+//       res.send({ code: 500, message: '此用户名已存在', success: false, result: null });
+//     } else {
+//       //3.返回响应数据
+//       const adminModel = new AdminModel({ username, password: md5(password), email, adminLevel, avatar });
+//       adminModel.save(function (error, user) {
+//         //生成一个cookie,并交给浏览器保存
+//         res.cookie('userid', user._id, { maxAge: 1000 * 60 * 60 * 24 * 7 });
 
-        //返回响应数据
-        const data = { _id: user._id, username, adminLevel, avatar, email };
-        res.send({ code: 200, result: data, message: '注册成功', success: true })
-      })
-    }
-  })
-})
+//         //返回响应数据
+//         const data = { _id: user._id, username, adminLevel, avatar, email };
+//         res.send({ code: 200, result: data, message: '注册成功', success: true })
+//       })
+//     }
+//   })
+// })
 
 /**
  * @typedef AdminLogin
