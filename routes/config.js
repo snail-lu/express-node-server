@@ -2,7 +2,7 @@ const express = require('express');
 var router = express.Router();
 
 // 引入ConfigModel
-const { ConfigModel } = require('../db/models');
+const { ConfigModel } = require('../models/config');
 const filter = { __v: 0 };
 
 // 新增配置项

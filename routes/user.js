@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 // 引入UserModel
-const { UserModel } = require('../db/models');
+const { UserModel } = require('../models/user');
 
 //过滤属性
 const filter = { password: 0, __v: 0 };

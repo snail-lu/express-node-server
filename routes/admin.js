@@ -1,8 +1,8 @@
 const express = require('express');
 var router = express.Router();
 
-// 引入UserModel
-const { AdminModel } = require('../db/models');
+// 引入AdminModel
+const { AdminModel } = require('../models/admin');
 //加密
 const md5 = require('blueimp-md5');
 //过滤属性

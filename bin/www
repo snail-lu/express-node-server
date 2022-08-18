@@ -31,7 +31,7 @@ app.all('*', function(req, res, next) {
  */
 
 var server = http.createServer(app);
-require("../socketIO/index")(server);
+// require("../socketIO/index")(server);
 /**
  * Listen on provided port, on all network interfaces.
  */
