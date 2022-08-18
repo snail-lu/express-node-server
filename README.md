@@ -13,13 +13,28 @@ express-node-server
 ├── public                  # 静态资源
 │   └── styles              # 样式文件 
 │
-├── bin                     #
+├── bin                     # 项目启动
 │   └── www
 │
-├── db                      # 数据库
-│   └── models.js           # Models定义
+├── models                  # 数据库模型定义
+│   ├── admin.js            # 管理员模型
+│   ├── article.js          # 文章模型
+│   ├── category.js         # 分类模型
+│   ├── chat.js             # 聊天模型
+│   ├── config.js           # 配置模型
+│   ├── page.js             # 页面模型
+│   ├── user.js             # 用户模型
+│   └── index.js            # 数据库连接
 │
 ├── routes                  # 路由
+│   ├── admin.js            # 管理员路由
+│   ├── article.js          # 文章路由
+│   ├── category.js         # 分类路由
+│   ├── chat.js             # 聊天路由
+│   ├── config.js           # 配置路由
+│   ├── page.js             # 页面路由
+│   ├── user.js             # 用户路由
+│   └── index.js            # 根路由
 │
 ├── socketIO                # 即时通讯
 │   
