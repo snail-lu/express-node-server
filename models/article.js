@@ -2,7 +2,7 @@
 * article 模块
 * */
 // 1 引入mongoose
-const { mongoose } = require('mongoose');
+const { mongoose }  = require('mongoose');
 
 // 2 定义Schema(描述文档结构)
 const articleSchema = mongoose.Schema({
