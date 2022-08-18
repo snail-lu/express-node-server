@@ -10,7 +10,7 @@ const adminSchema = mongoose.Schema({
     username: { type:String, required:true },       //用户名
     password: { type:String, required:true },       //密码
     email: { type:String, required:true },          //邮箱
-    adminLevel: { type:String, required:true } ,    //职位权限
+    level: { type:String, required:true } ,    //职位权限
     avatar:{ type:String },                         //头像
 })
 

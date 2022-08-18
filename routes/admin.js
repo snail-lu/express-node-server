@@ -80,7 +80,6 @@ const filter = { password: 0, __v: 0 };
 router.post('/login', function (req, res) {
   //1.获取请求参数
   const { username, password } = req.body;
-  console.log(md5(password))
 
   //2.处理
   //判断用户名密码是否正确
@@ -91,7 +90,6 @@ router.post('/login', function (req, res) {
       res.cookie('userid', user._id, { maxAge: 100 * 60 * 60 * 24 * 7 });
       res.send({ code: 200, result: user, success: true, message: '登录成功'});
     } else {
-      //3.
       res.send({ code: 500, message: "用户名或密码不正确！", success: false, result: null })
     }
   })
@@ -152,8 +150,8 @@ router.post('/delete', function (req, res) {
 
 /**
  * @typedef AdminList
- * @property {string} usernameLike - 管理员名称（模糊查询）
- * @property {number} adminLevel - 管理员等级
+ * @property {string} username - 管理员名称（模糊查询）
+ * @property {number} level - 管理员等级
  * @property {PageInfo.model} pageInfo.required - 分页参数
  */
 
