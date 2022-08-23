@@ -53,7 +53,7 @@ express-node-server
 
 ```
 
-### 常用命令
+## 常用命令
 1. 启动数据库
 ```bash
 mongod --config /usr/local/etc/mongod.conf
