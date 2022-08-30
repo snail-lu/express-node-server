@@ -3,8 +3,7 @@ var router = express.Router();
 
 // 引入AdminModel
 const { AdminModel } = require('../models/admin');
-//加密
-const md5 = require('blueimp-md5');
+
 //过滤属性
 const filter = { password: 0, __v: 0 };
 
@@ -49,7 +48,7 @@ const filter = { password: 0, __v: 0 };
 //       res.send({ code: 500, message: '此用户名已存在', success: false, result: null });
 //     } else {
 //       //3.返回响应数据
-//       const adminModel = new AdminModel({ username, password: md5(password), email, adminLevel, avatar });
+//       const adminModel = new AdminModel({ username, password, email, adminLevel, avatar });
 //       adminModel.save(function (error, user) {
 //         //生成一个cookie,并交给浏览器保存
 //         res.cookie('userid', user._id, { maxAge: 1000 * 60 * 60 * 24 * 7 });
@@ -84,7 +83,7 @@ router.post('/login', function (req, res) {
   //2.处理
   //判断用户名密码是否正确
   //返回的user数据，过滤掉filter中包含的属性
-  AdminModel.findOne({ username, password: md5(password) }, filter, function (error, user) {
+  AdminModel.findOne({ username, password }, filter, function (error, user) {
     if (user) {
       //3.返回响应数据"登录成功"
       res.cookie('userid', user._id, { maxAge: 100 * 60 * 60 * 24 * 7 });

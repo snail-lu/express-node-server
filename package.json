@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@vercel/node": "^2.5.2",
-    "blueimp-md5": "^2.10.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",

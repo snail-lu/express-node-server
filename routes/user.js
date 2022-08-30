@@ -46,7 +46,7 @@ router.post('/register', function (req, res) {
       res.send({ code: 500, message: '此用户名已存在', success: false, result: null });
     } else {
       //3.返回响应数据
-      const userModel = new UserModel({ username, password: md5(password) });
+      const userModel = new UserModel({ username, password });
       userModel.save(function (error, user) {
         //生成一个cookie,并交给浏览器保存
         res.cookie('userid', user._id, { maxAge: 1000 * 60 * 60 * 24 * 7 });
