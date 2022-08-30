@@ -12,7 +12,7 @@ const filter = { password: 0, __v: 0 };
  * @property {string} username.required - 名称
  * @property {string} password.required - 密码
  * @property {string} email.required - 邮箱
- * @property {string} adminLevel.required - 管理员等级
+ * @property {string} level.required - 管理员等级
  */
 
 /**
@@ -32,34 +32,31 @@ const filter = { password: 0, __v: 0 };
 //  * @returns {Error} 404 - Not Found
 //  * 
 //  */
-// router.post('/register', function (req, res) {
-//   //1.获取请求参数
-//   const { username, password, email, adminLevel, avatar } = req.body;
+router.post('/register', function (req, res) {
+  //1.获取请求参数
+  const { username, password, email, level, status } = req.body;
 
-//   if (!email || adminLevel === undefined) {
-//     res.send({ code: 500, message: '用户信息不完整', success: false, result: null })
-//     return;
-//   }
-//   //2.处理
-//   //判断用户是否已经存在
-//   AdminModel.findOne({ username }, function (error, user) {
-//     if (user) {
-//       //3.返回响应数据
-//       res.send({ code: 500, message: '此用户名已存在', success: false, result: null });
-//     } else {
-//       //3.返回响应数据
-//       const adminModel = new AdminModel({ username, password, email, adminLevel, avatar });
-//       adminModel.save(function (error, user) {
-//         //生成一个cookie,并交给浏览器保存
-//         res.cookie('userid', user._id, { maxAge: 1000 * 60 * 60 * 24 * 7 });
-
-//         //返回响应数据
-//         const data = { _id: user._id, username, adminLevel, avatar, email };
-//         res.send({ code: 200, result: data, message: '注册成功', success: true })
-//       })
-//     }
-//   })
-// })
+  if (!email || level === undefined) {
+    res.send({ code: 500, message: '用户信息不完整', success: false, result: null })
+    return;
+  }
+  //2.处理
+  //判断用户是否已经存在
+  AdminModel.findOne({ username, email }, function (error, user) {
+    if (user) {
+      //3.返回响应数据
+      res.send({ code: 500, message: '此用户名已存在', success: false, result: null });
+    } else {
+      //3.返回响应数据
+      const adminModel = new AdminModel({ username, password, email, level, status });
+      adminModel.save(function (error, user) {
+        //返回响应数据
+        const data = { id: user._id, username, level, email, status };
+        res.send({ code: 200, result: data, message: '注册成功', success: true })
+      })
+    }
+  })
+})
 
 /**
  * @typedef AdminLogin
@@ -173,7 +170,18 @@ router.post('/delete', function (req, res) {
 router.post('/list', async function (req, res) {
   const { pageInfo: { pageNo = 1, pageSize = 10 } } = req.body;
   const total = await AdminModel.countDocuments({});
-  AdminModel.find({}, filter, { limit: pageSize, skip: (pageNo-1)*pageSize }, function (err, list) {
+  // AdminModel.find({}, filter, { limit: pageSize, skip: (pageNo-1)*pageSize }, function (err, list) {
+  //   if (err) {
+  //     res.send({ code: 500, message: '查询失败', success: false, result: null })
+  //   } else {
+  //     res.send({ code: 200, result: { list, total }, success: true, message: '查询成功' })
+  //   }
+  // })
+  AdminModel.aggregate([
+    { $skip: (pageNo - 1) * pageSize },
+    { $limit: pageSize },
+    { $project: { id: "$_id", username: 1, email: 1, level: 1, status: 1, _id: 0 } },
+  ], (err, list) => {
     if (err) {
       res.send({ code: 500, message: '查询失败', success: false, result: null })
     } else {
