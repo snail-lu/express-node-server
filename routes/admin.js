@@ -109,12 +109,14 @@ router.post('/login', function (req, res) {
  * @returns {Error}  404 - Not Found
  */
 router.post('/update', function (req, res) {
-  const { id: _id, username, email, adminLevel } = req.body;
-  AdminModel.findByIdAndUpdate(_id, { username, email, adminLevel }, function (err, admin) {
+  const { id: _id, username, email, level, status } = req.body;
+  AdminModel.findByIdAndUpdate(_id, { username, email, level, status }, function (err, admin) {
     if (!err) {
-      res.send({ code: 200, message: '修改成功', success: true, result: admin });
+      //返回响应数据
+      const { _id: id, username, level, email, status } = admin
+      res.send({ code: 200, message: '修改成功', success: true, result: { id, username, level, email, status } });
     } else {
-      res.send({ code: 500, message: '修改失败', success: false, result: admin })
+      res.send({ code: 500, message: '修改失败', success: false, result: null })
     }
   })
 })
