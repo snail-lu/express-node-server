@@ -73,6 +73,14 @@ app.use('/api/admin', adminRouter);
 // app.use('/api/config', configRouter);
 // app.use('/api/article', articleRouter);
 
+// 超时时间设置
+app.use(function (req, res, next) {
+  res.sendTimeout(120 * 1000, function () {
+    return res.status(408).send('请求超时')
+  })
+  next();
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
