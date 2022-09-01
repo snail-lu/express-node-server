@@ -12,7 +12,7 @@ const filter = { password: 0, __v: 0 };
  * @property {string} username.required - 名称
  * @property {string} password.required - 密码
  * @property {string} email.required - 邮箱
- * @property {string} level.required - 管理员等级
+ * @property {string} role.required - 角色
  */
 
 /**
@@ -34,9 +34,10 @@ const filter = { password: 0, __v: 0 };
 //  */
 router.post('/register', function (req, res) {
   //1.获取请求参数
-  const { username, password, email, level, status } = req.body;
+  const { username, password, email, role, status } = req.body;
+  debugger
 
-  if (!email || level === undefined) {
+  if (!email || role === undefined) {
     res.send({ code: 500, message: '用户信息不完整', success: false, result: null })
     return;
   }
@@ -48,10 +49,10 @@ router.post('/register', function (req, res) {
       res.send({ code: 500, message: '此用户名已存在', success: false, result: null });
     } else {
       //3.返回响应数据
-      const adminModel = new AdminModel({ username, password, email, level, status });
+      const adminModel = new AdminModel({ username, password, email, role, status });
       adminModel.save(function (error, user) {
         //返回响应数据
-        const data = { id: user._id, username, level, email, status };
+        const data = { id: user._id, username, role, email, status };
         res.send({ code: 200, result: data, message: '注册成功', success: true })
       })
     }
@@ -83,8 +84,8 @@ router.post('/login', function (req, res) {
   AdminModel.findOne({ username, password }, filter, function (error, user) {
     if (user) {
       //3.返回响应数据"登录成功"
-      const { _id: id, username, level } = user
-      res.send({ code: 200, result: { id, username, level }, success: true, message: '登录成功'});
+      const { _id: id, username, role } = user
+      res.send({ code: 200, result: { id, username, role }, success: true, message: '登录成功'});
     } else {
       res.send({ code: 500, message: "用户名或密码不正确！", success: false, result: null })
     }
@@ -97,7 +98,7 @@ router.post('/login', function (req, res) {
  * @property {string} id - 主键
  * @property {string} username - 名称
  * @property {string} email - 邮箱
- * @property {string} adminLevel - 管理员等级
+ * @property {string} role - 角色
  */
 /**
  * 管理员信息修改
@@ -109,12 +110,12 @@ router.post('/login', function (req, res) {
  * @returns {Error}  404 - Not Found
  */
 router.post('/update', function (req, res) {
-  const { id: _id, username, email, level, status } = req.body;
-  AdminModel.findByIdAndUpdate(_id, { username, email, level, status }, function (err, admin) {
+  const { id, username, email, role, status } = req.body;
+  AdminModel.findByIdAndUpdate(id, { username, email, role, status }, function (err, admin) {
     if (!err) {
       //返回响应数据
-      const { _id: id, username, level, email, status } = admin
-      res.send({ code: 200, message: '修改成功', success: true, result: { id, username, level, email, status } });
+      const { _id: id, username, role, email, status } = admin
+      res.send({ code: 200, message: '修改成功', success: true, result: { id, username, role, email, status } });
     } else {
       res.send({ code: 500, message: '修改失败', success: false, result: null })
     }
@@ -149,7 +150,7 @@ router.post('/delete', function (req, res) {
 /**
  * @typedef AdminList
  * @property {string} username - 管理员名称（模糊查询）
- * @property {number} level - 管理员等级
+ * @property {number} role - 角色
  * @property {PageInfo.model} pageInfo.required - 分页参数
  */
 
@@ -182,7 +183,7 @@ router.post('/list', async function (req, res) {
   AdminModel.aggregate([
     { $skip: (pageNo - 1) * pageSize },
     { $limit: pageSize },
-    { $project: { id: "$_id", username: 1, email: 1, level: 1, status: 1, _id: 0 } },
+    { $project: { id: "$_id", username: 1, email: 1, role: 1, status: 1, _id: 0 } },
   ], (err, list) => {
     if (err) {
       res.send({ code: 500, message: '查询失败', success: false, result: null })
