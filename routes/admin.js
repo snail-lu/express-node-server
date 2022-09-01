@@ -83,8 +83,8 @@ router.post('/login', function (req, res) {
   AdminModel.findOne({ username, password }, filter, function (error, user) {
     if (user) {
       //3.返回响应数据"登录成功"
-      res.cookie('userid', user._id, { maxAge: 100 * 60 * 60 * 24 * 7 });
-      res.send({ code: 200, result: user, success: true, message: '登录成功'});
+      const { _id: id, username, level } = user
+      res.send({ code: 200, result: { id, username, level }, success: true, message: '登录成功'});
     } else {
       res.send({ code: 500, message: "用户名或密码不正确！", success: false, result: null })
     }
