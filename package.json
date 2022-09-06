@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "build": "node ./bin/www",
     "dev": "vercel dev"
   },
   "dependencies": {
