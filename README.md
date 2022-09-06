@@ -1,6 +1,6 @@
 <h2 align="center">Express Node Server</h2>
 <p align="center">
-    <a href="https://node-server-nu.vercel.app/swagger" target="_blank">线上地址</a>
+    <a href="https://express-node-server.herokuapp.com/swagger" target="_blank">线上地址</a>
     ·
     <a href="https://github.com/Snail-Lu/node-express-server" target="_blank">仓库地址</a>
     ·
