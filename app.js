@@ -75,7 +75,7 @@ app.use('/api/admin', adminRouter);
 
 // 超时时间设置
 app.use(function (req, res, next) {
-  res.sendTimeout(120 * 1000, function () {
+  res.setTimeout(120 * 1000, function () {
     return res.status(408).send('请求超时')
   })
   next();
