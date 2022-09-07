@@ -8,6 +8,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 // var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
+var pageRouter = require('./routes/page');
 // var configRouter = require('./routes/config');
 // var articleRouter = require('./routes/article');
 
@@ -69,6 +70,7 @@ app.all('*', function(req, res, next) {
 
 app.use('/', indexRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/page', pageRouter);
 // app.use('/api/user', userRouter);
 // app.use('/api/config', configRouter);
 // app.use('/api/article', articleRouter);

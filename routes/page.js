@@ -4,22 +4,16 @@ const router = express.Router();
 const { PageModel } = require('../models/page');
 const filter = { __v: 0 };
 
-router.post('/list', function(req, res){
-    PageModel.find({},filter,(err,articles)=>{
-        if(!err){
-          res.send({
-            code: 0,
-            data: articles || []
-          })
-        }else{
-          res.send({
-            code: 1,
-            msg: err
-          })
-        }
-    
-      })
-    
+router.post('/list', async function (req, res) {
+  const { pageInfo: { pageNo = 1, pageSize = 10 } } = req.body;
+  const total = await PageModel.countDocuments({});
+  PageModel.find({}, filter, { limit: pageSize, skip: (pageNo-1)*pageSize }, (err, pages) => {
+    if (err) {
+      res.send({ code: 500, message: '查询失败', success: false, result: null })
+    } else {
+      res.send({ code: 200, result: { pages, total }, success: true, message: '查询成功' })
+    }
+  })
 })
 
 router.post('/add', function(req, res){
