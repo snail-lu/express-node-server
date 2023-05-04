@@ -10,7 +10,7 @@ const filter = { password: 0, __v: 0 };
 /**
  * @typedef UserRegister
  * @property {string} username.required - 名称
- * @property {string} mobile.required - 密码
+ * @property {string} password.required - 密码
  */
 
 /**
@@ -32,10 +32,15 @@ const filter = { password: 0, __v: 0 };
 
 router.post('/register', function (req, res) {
   //1.获取请求参数
-  const { username, mobile } = req.body;
+  const { username, password } = req.body;
 
-  if (!username || mobile === undefined) {
-    res.send({ code: 500, message: '用户信息不完整', success: false, result: null })
+  if (!username) {
+    res.send({ code: 500, message: '用户名不可为空', success: false, result: null })
+    return;
+  }
+
+  if (!password) {
+    res.send({ code: 500, message: '密码不可为空', success: false, result: null })
     return;
   }
   //2.处理
@@ -48,15 +53,44 @@ router.post('/register', function (req, res) {
       //3.返回响应数据
       const userModel = new UserModel({ username, password });
       userModel.save(function (error, user) {
+        console.log(user, 'res')
         //生成一个cookie,并交给浏览器保存
         res.cookie('userid', user._id, { maxAge: 1000 * 60 * 60 * 24 * 7 });
 
         //返回响应数据
-        const data = { _id: user._id, username, avatar, email };
+        const data = { _id: user._id, username };
         res.send({ code: 200, result: data, message: '注册成功', success: true })
       })
     }
   })
+})
+
+/**
+ * 登录
+ * @route POST /user/login
+ * @summary 用户登录
+ * @group user - 用户模块
+ * @param {UserRegister.model} request.body.required - 登录参数
+ * @returns {Response.model} 200 - OK
+ * @returns {Error}  404 - Not Found
+ */
+router.post('/login', function (req, res) {
+  //1.获取请求参数
+  const { username, password } = req.body;
+
+  //2.处理
+  //判断用户名密码是否正确
+  //返回的user数据，过滤掉filter中包含的属性
+  UserModel.findOne({ username, password }, filter, function (error, user) {
+    if (user) {
+      //3.返回响应数据"登录成功"
+      const { _id: id, username } = user
+      res.send({ code: 200, result: { id, username }, success: true, message: '登录成功'});
+    } else {
+      res.send({ code: 500, message: "用户名或密码不正确！", success: false, result: null })
+    }
+  })
+
 })
 
 /**
